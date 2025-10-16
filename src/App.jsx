@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+// ...existing code...
 import { useEffect } from "react";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
@@ -11,26 +11,28 @@ import Forum from "./pages/Forum";
 import Admin from "./pages/AdminDashboard";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
-
 import ProtectedRoute from "./components/ProtectedRoute";
 import useAuthStore from "./store/authStore";
+
+// Add CursorFollower import
+import CursorFollower from "./components/CursorFollower";
 
 const App = () => {
   const { user, fetchUser } = useAuthStore();
 
-  // Ensure user info is fetched on app start
   useEffect(() => {
     fetchUser();
   }, [fetchUser]);
 
   return (
     <Router>
-      <div className="min-h-screen flex flex-col bg-linear-to-r from-black via-slate-800 to-indigo-800 text-white">
+      {/* Add cursor follower for interactive UI */}
+      <CursorFollower />
+      <div className="min-h-screen flex flex-col bg-gradient-to-r from-black via-slate-800 to-indigo-800 text-white">
         <Navbar />
         <main className="flex-1 mx-auto px-4 py-4">
           <Routes>
             <Route path="/" element={<Home />} />
-
             <Route
               path="/chat"
               element={
@@ -79,7 +81,6 @@ const App = () => {
                 </ProtectedRoute>
               }
             />
-
             <Route path="/login" element={!user ? <Login /> : <Home />} />
             <Route path="/signup" element={!user ? <Signup /> : <Home />} />
           </Routes>
@@ -90,5 +91,5 @@ const App = () => {
   );
 }
 
-
 export default App;
+// ...existing code...
